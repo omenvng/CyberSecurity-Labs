@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="google-signin-client_id" content="616483089552-kuc83hq1eipipbabt7tptuecmkf1mi1n.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/oauth-io/oauth-js/c5af4519/dist/oauth.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-social.min.css">
+    <script src="oauth.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <h1>Choose Login Method</h1>
+
+
+    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
+    <script type="text/javascript">
+                    VK.init({apiId: 7635028});
+    </script>
+
+    <div id="vk_auth"></div>
+    <script type="text/javascript">
+                    VK.Widgets.Auth("vk_auth", {});
+    </script>
+
+    <h1></h1>
+    <a id="linkedin-button" class="btn btn-block btn-social btn-linkedin" style="width: 200px;">
+    <i class="fa fa-linkedin" aria-hidden="true"></i> Sign in with Linkedin
+    </a>
+
+    <script>
+        $('#linkedin-button').on('click', function() {
+        // Initialize with your OAuth.io app public key
+         OAuth.initialize('xp2rKYpuKZXaaYC5kB-m13KnVE');
+         // Use popup for oauth
+        OAuth.popup('linkedin2').then(linkedin => {
+            console.log('linkedin:',linkedin);
+        // Prompts 'welcome' message with User's email on successful login
+        // #me() is a convenient method to retrieve user data without requiring you
+        // to know which OAuth provider url to call
+            linkedin.me().then(data => {
+            console.log('me data:', data);
+            alert('Linkedin says your email is:' + data.email + ".\nView browser 'Console Log' for more details");
+            })
+        // Retrieves user data from OAuth provider by using #get() and
+        // OAuth provider url
+            linkedin.get('/v2/me').then(data => {
+            console.log('self data:', data);
+            })
+        });
+        })
+  </script>
+
+<a id="github-button" class="btn btn-block btn-social btn-github" style="width: 200px;">
+    <i class="fa fa-github"></i> Sign in with Github
+  </a>
+    <script>
+        $('#github-button').on('click', function() {
+            OAuth.initialize('{API_KEY}');
+            OAuth.popup('github').then(github => {
+              console.log('github:', github);
+            github.me().then(data => {
+              console.log('me data:', data);
+              let github_info2 = `
+                <h3>${data.alias}</h3>
+                <ul class="list-group">
+                  <li class="list-group-item">Avatar: ${data.avatar}</li>
+                  <li class="list-group-item">Bio: ${data.bio}</li>
+                  <li class="list-group-item">Company: ${data.company}</li>
+                  <li class="list-group-item">Email: ${data.email}</li>
+                  <li class="list-group-item">ID: ${data.id}</li>
+                  <li class="list-group-item">Location: ${data.location}</li>
+                  <li class="list-group-item">Name: ${data.name}</li>
+                </ul>
+              `;
+              document.getElementById('github_info').innerHTML = github_info2;
+        });
+            github.get('/user').then(data => {
+              console.log('self data:', data);
+            })
+          });
+        })
+    </script>
+
+    
+  </body>
+</html>
